@@ -1,0 +1,6 @@
+[workspace]
+
+members = [
+    "codext-cli",
+    "xt-wasm",
+]

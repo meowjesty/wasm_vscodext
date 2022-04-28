@@ -2,6 +2,8 @@
 
 "use strict";
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const CopyPlugin = require("copy-webpack-plugin");
 const path = require("path");
 const webpack = require("webpack");
 
@@ -45,6 +47,21 @@ const config = {
   plugins: [
     new webpack.ProvidePlugin({
       process: "process/browser", // provide a shim for the global `process` variable
+    }),
+    // NOTE(alex): We need the rust created `.wasm` file in the `dist` folder next to the
+    // "executable" (`extension.js`).
+    // TODO(alex) [low] 2022-04-27: These paths are kinda wonky looking, maybe I could resolve them
+    // in some other way.
+    new CopyPlugin({
+      patterns: [
+        {
+          from: "*.wasm",
+          to: "../dist/",
+          // NOTE(alex): Prevents copying the whole folder structure, if not present, we end up with
+          // `dist/xt-wasm/pkg/[file].wasm`.
+          context: "../xt-wasm/pkg/",
+        },
+      ],
     }),
   ],
   module: {

@@ -12,6 +12,7 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
+import * as https from "https";
 
 // NOTE(alex): Made it work!
 //
@@ -19,7 +20,7 @@ import * as vscode from "vscode";
 // 1. Compile wasm project with `wasm-pack build --target nodejs`;
 // 2. Must copy the `.wasm` file to the extension `dist` folder;
 // 3. Use `webpack.config.js` via `npm run build` that is setup in `package.json`;
-import { greet } from "xt-wasm";
+import { greet, rustRequest, kubernetes } from "xt-wasm";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -38,9 +39,9 @@ export function activate(context: vscode.ExtensionContext) {
 
     let greeting = greet();
     vscode.window.showInformationMessage("greeting is ", greeting);
-    // makeRequest().then(() => {
-    //   vscode.window.showInformationMessage("Done with rust wasm request!");
-    // });
+
+    // TODO(alex) [high] 2022-04-28: Make a proper k8s_openapi request!
+    kubernetes();
   });
 
   context.subscriptions.push(disposable);

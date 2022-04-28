@@ -22,18 +22,14 @@
     ]
   },
   "scripts": {
-    "build-esbuild": "node ./esbuild.config.js",
     "build": "webpack --mode development",
-    "vscode:prepublish": "npm run esbuild-base -- --minify",
-    "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=out/main.js --external:vscode --format=cjs --platform=node",
-    "esbuild": "npm run esbuild-base -- --sourcemap",
-    "esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
+    "vscode:prepublish": "npm run package",
+    "webpack": "webpack --mode development",
+    "webpack-dev": "webpack --mode development --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
     "test-compile": "tsc -p ./"
   },
   "dependencies": {
-    "node-fetch": "^2.6.7",
-    "path-browserify": "^1.0.1",
-    "util": "^0.12.4",
     "xt-wasm": "file:../xt-wasm/pkg"
   },
   "devDependencies": {
@@ -46,7 +42,6 @@
     "@typescript-eslint/parser": "^5.16.0",
     "@vscode/test-electron": "^2.1.3",
     "copy-webpack-plugin": "^10.2.4",
-    "esbuild": "^0.14.38",
     "eslint": "^8.11.0",
     "glob": "^7.2.0",
     "mocha": "^9.2.2",

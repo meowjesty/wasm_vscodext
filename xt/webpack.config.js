@@ -5,6 +5,7 @@
 const path = require("path");
 const webpack = require("webpack");
 
+// TODO(alex) [mid] 2022-04-27: Have this build copy the `.wasm` file to `dist/`.
 /**@type {import('webpack').Configuration}*/
 const config = {
   mode: "none",
@@ -18,9 +19,6 @@ const config = {
 
   entry: "./src/extension.ts", // the entry point of this extension, 📖 -> https://webpack.js.org/configuration/entry-context/
   output: {
-    // https://stackoverflow.com/questions/64639839/typescript-webpack-library-generates-referenceerror-self-is-not-defined
-    globalObject: "this",
-    publicPath: "",
     // the bundle is stored in the 'dist' folder (check package.json), 📖 -> https://webpack.js.org/configuration/output/
     path: path.resolve(__dirname, "dist"),
     filename: "extension.js",
@@ -42,10 +40,6 @@ const config = {
       // Webpack 5 no longer polyfills Node.js core modules automatically.
       // see https://webpack.js.org/configuration/resolve/#resolvefallback
       // for the list of Node.js core module polyfills.
-      fetch: require.resolve("node-fetch"),
-      path: require.resolve("path-browserify"),
-      util: require.resolve("util/"),
-      //   window: require.resolve("node-fetch"),
     },
   },
   plugins: [
